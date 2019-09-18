@@ -1,7 +1,7 @@
 """
 Usage:
     csv-combiner-cleaner combine <jsons_folder> [--target_file=<target_file>]
-    csv-combiner-cleaner clean <json_file>
+    csv-combiner-cleaner clean <json_file> [--target_file=<target_file>]
 
 Options:
 
@@ -34,8 +34,13 @@ def main():
             
     elif args["clean"]:
         json_file = args["<json_file>"]
-        clean_json(json_file)
-        pass
+        cleaned_data = clean_json(json_file,logging)
+        if args["--target_file"]:
+            target_file = args["--target_file"]
+            hlp.save_data_to_json(cleaned_data,target_file,logging)
+            logging.info("[+] Done cleaning data!")
+        else:
+            print(cleaned_data)
 
 
 if __name__=="__main__":
